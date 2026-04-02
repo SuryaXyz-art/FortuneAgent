@@ -7,10 +7,11 @@ body {
   min-height: 100vh;
 }
 
+/* FIXED: Widened from 700px to 1200px for multi-view layout */
 .app {
-  max-width: 700px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0;
   text-align: center;
 }
 
@@ -37,6 +38,38 @@ h1 { font-size: 2.5rem; color: #c9a0ff; margin-bottom: 0.5rem; }
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
   margin: 1.5rem 0;
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 0;
+  }
+  .zodiac-grid {
+    grid-template-columns: 1fr;
+  }
+  .toast {
+    width: 95vw;
+  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 107, 107, 0.9);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+  animation: slideUp 0.3s ease-out;
+  font-family: system-ui, sans-serif;
+  text-align: center;
+}
+@keyframes slideUp {
+  from { bottom: -50px; opacity: 0; }
+  to { bottom: 2rem; opacity: 1; }
 }
 
 .zodiac-btn {

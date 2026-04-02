@@ -1,7 +1,8 @@
+// FIXED: chainId corrected to 0x4CF752 (5042002 decimal), currency corrected to ARC
 export const ARC_TESTNET = {
-  chainId: '0x4CE102',
+  chainId: '0x4CF752',
   chainName: 'Arc Testnet',
-  nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 18 },
+  nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
   rpcUrls: ['https://rpc.testnet.arc.network'],
   blockExplorerUrls: ['https://testnet.arcscan.app']
 };
