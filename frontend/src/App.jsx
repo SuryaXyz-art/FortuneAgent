@@ -263,6 +263,52 @@ export default function App() {
             )}
 
             {error && <div className="error" style={{ marginTop: '1.5rem' }}>⚠️ {error}</div>}
+
+            {/* Smart Contract Interactive Elements */}
+            <div style={{ marginTop: '3rem', padding: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,215,0,0.2)' }}>
+              <h3 style={{ color: '#ffd700', marginTop: 0 }}>On-Chain Statistics & Tipping</h3>
+              
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
+                <button 
+                  className="btn primary"
+                  onClick={async () => {
+                    if(!wallet) return setError('Connect wallet first.');
+                    try {
+                      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, wallet.provider);
+                      const total = await contract.totalMinted();
+                      alert(`Total Fortunes Minted on Arc Testnet: ${total.toString()}`);
+                    } catch(err) {
+                      setError('Failed to fetch stats: ' + err.message);
+                    }
+                  }}
+                >
+                  📊 View Total Mints
+                </button>
+
+                <button 
+                  className="btn primary"
+                  onClick={async () => {
+                    if(!wallet) return setError('Connect wallet first.');
+                    try {
+                      // Prompt user to tip using Native USDC on Arc Testnet
+                      const tx = await wallet.signer.sendTransaction({
+                        to: "0x1111111111111111111111111111111111111111", // Example dev treasury or burn address
+                        value: ethers.parseEther("0.1") // 0.1 USDC (Native Gas Token)
+                      });
+                      alert(`Transaction sent! Hash: ${tx.hash}`);
+                      await tx.wait();
+                      alert('Thank you for your 0.1 USDC cosmic tip! ✨');
+                    } catch(err) {
+                      if (err.code === 'ACTION_REJECTED' || err.code === 4001) return setError('Tip rejected.');
+                      setError('Tip failed: ' + err.message);
+                    }
+                  }}
+                  style={{ background: 'linear-gradient(45deg, #2775ca, #0052ff)', border: 'none' }}
+                >
+                  💧 Tip 0.1 USDC Natively
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
