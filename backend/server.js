@@ -3,7 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 app.use(cors());
@@ -31,14 +36,15 @@ app.get('/api/horoscope/:sign', async (req, res) => {
 
     const projectId = process.env.NOUS_PROJECT_ID;
 
-    const response = await fetch('https://inference.portal.nousresearch.com/v1/chat/completions', {
+    // FIXED: Using verified working endpoint and model name
+    const response = await fetch('https://inference-api.nousresearch.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'hermes-3-llama-70b',
+        model: 'nousresearch/hermes-3-llama-3.1-70b',
         messages: [
           {
             role: 'system',
@@ -148,14 +154,15 @@ luckyNumbers (array of 3), luckyColors (array of 3),
 spiritualMessage (inspiring paragraph), 
 detailedLifeAnalysis (3 paragraphs as array of strings)`;
 
-    const response = await fetch('https://inference.portal.nousresearch.com/v1/chat/completions', {
+    // FIXED: Using verified working endpoint and model name
+    const response = await fetch('https://inference-api.nousresearch.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'hermes-3-llama-70b',
+        model: 'nousresearch/hermes-3-llama-3.1-70b',
         messages: [
           {
             role: 'system',
@@ -251,14 +258,15 @@ Reference their specific analysis details when relevant.`;
       { role: 'user', content: userMessage }
     ];
 
-    const response = await fetch('https://inference.portal.nousresearch.com/v1/chat/completions', {
+    // FIXED: Using verified working endpoint and model name
+    const response = await fetch('https://inference-api.nousresearch.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'hermes-3-llama-70b',
+        model: 'nousresearch/hermes-3-llama-3.1-70b',
         messages: messages,
         temperature: 0.8,
         max_tokens: 1000,
@@ -308,15 +316,15 @@ app.post('/api/fortune', async (req, res) => {
 
     const projectId = process.env.NOUS_PROJECT_ID; // Nouswise requires projectId for routing.
 
-    // FIXED: Aligned endpoint, model, and added temperature/max_tokens
-    const response = await fetch('https://inference.portal.nousresearch.com/v1/chat/completions', {
+    // FIXED: Using verified working endpoint and model name
+    const response = await fetch('https://inference-api.nousresearch.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'hermes-3-llama-70b',
+        model: 'nousresearch/hermes-3-llama-3.1-70b',
         messages: [
           {
             role: 'system',
