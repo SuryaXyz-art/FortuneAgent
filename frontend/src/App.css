@@ -115,3 +115,50 @@ h1 { font-size: 2.5rem; color: #c9a0ff; margin-bottom: 0.5rem; }
   color: #fca5a5;
   margin-top: 1rem;
 }
+
+/* EXTRACTED FROM APP.JSX */
+.analysis-container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; }
+.analysis-title { color: #ffd700; text-align: center; font-size: 2.5rem; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
+.analysis-content { display: flex; flex-direction: column; gap: 1.5rem; color: #fff; }
+.analysis-card-gold { background: linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8)); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255, 215, 0, 0.4); box-shadow: 0 0 30px rgba(255, 215, 0, 0.1); }
+.analysis-card-gold-title { color: #ffd700; margin-top: 0; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 0.5rem; }
+.analysis-text { line-height: 1.6; }
+.analysis-card-purple { background: linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8)); padding: 2rem; border-radius: 16px; border: 1px solid rgba(155, 81, 224, 0.4); }
+.analysis-card-purple-title { color: #9b51e0; margin-top: 0; }
+.analysis-list { padding-left: 1.5rem; line-height: 1.6; }
+.spiritual-message-text { font-style: italic; line-height: 1.8; font-size: 1.1rem; }
+.lucky-stats { margin-top: 1.5rem; color: #a0a0b0; font-size: 0.95rem; display: flex; gap: 2rem; }
+.chat-agent-btn { padding: 1.25rem; font-size: 1.25rem; margin-top: 1.5rem; background: linear-gradient(90deg, #4a2a6b, #9b51e0, #ffd700, #9b51e0, #4a2a6b); background-size: 300% auto; color: #fff; border: 1px solid #ffd700; border-radius: 12px; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: transform 0.2s; }
+
+.top-navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255, 215, 0, 0.2); margin-bottom: 2rem; backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 50; }
+.nav-logo { margin: 0; cursor: pointer; color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.3); vertical-align: middle; display: flex; align-items: center; gap: 0.5rem; }
+.nav-actions { display: flex; gap: 2rem; align-items: center; }
+.nav-btn { background: transparent; border: none; color: #fff; cursor: pointer; font-size: 1rem; font-weight: 600; transition: color 0.2s; }
+.nav-wallet-btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+.wallet-badge { font-size: 0.9rem; color: #ffd700; background: rgba(255,215,0,0.1); padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid rgba(255,215,0,0.3); }
+
+.main-content { padding: 0 1rem 3rem; }
+.home-container { text-align: center; max-width: 800px; margin: 3rem auto; }
+.home-title { font-size: 3.5rem; margin-bottom: 1rem; color: #fff; letter-spacing: 1px; }
+.home-title-highlight { color: #ffd700; }
+.home-subtitle { font-size: 1.2rem; color: #a0a0b0; margin-bottom: 3.5rem; line-height: 1.6; }
+.home-actions { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 4.5rem; flex-wrap: wrap; }
+.action-btn-large { padding: 1.2rem 2.5rem; font-size: 1.2rem; }
+.action-btn-mint { padding: 1.2rem 2.5rem; font-size: 1.2rem; background: transparent; border: 2px solid #9b51e0; color: #9b51e0; }
+
+.divider-container { display: flex; align-items: center; margin: 3rem 0; opacity: 0.6; }
+.divider-line-left { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #4a2a6b); }
+.divider-text { padding: 0 1.5rem; color: #a0a0b0; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; }
+.divider-line-right { flex: 1; height: 1px; background: linear-gradient(270deg, transparent, #4a2a6b); }
+
+.mt-2rem { margin-top: 2rem; }
+.mt-1_5rem { margin-top: 1.5rem; }
+.link-gold { color: #ffd700; text-decoration: underline; }
+
+.stats-card { margin-top: 3rem; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(255,215,0,0.2); }
+.stats-title { color: #ffd700; margin-top: 0; }
+.stats-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+.btn-tip { background: linear-gradient(45deg, #2775ca, #0052ff); border: none; }
+
+.site-footer { text-align: center; padding: 2rem; color: #a0a0b0; border-top: 1px solid rgba(255,215,0,0.1); margin-top: 2rem; }
+

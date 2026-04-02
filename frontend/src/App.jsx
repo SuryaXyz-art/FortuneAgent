@@ -8,8 +8,12 @@ import HoroscoppeDashboard from './components/HoroscoppeDashboard';
 import AstroAgentForm from './components/AstroAgentForm';
 import AstroChat from './components/AstroChat';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
+if (!CONTRACT_ADDRESS) {
+  console.warn('⚠️ VITE_CONTRACT_ADDRESS is not set. Minting will not work.');
+}
 
 export default function App() {
   const [view, setView] = useState('home'); // home | horoscope | agent-form | analysis-result | chat
@@ -77,7 +81,6 @@ export default function App() {
       await tx.wait();
       setTxHash(tx.hash);
     } catch (err) {
-      // FIXED: Added specific user-rejection handling
       if (err.code === 'ACTION_REJECTED' || err.code === 4001) {
         setError('Transaction rejected by user.');
       } else {
@@ -92,53 +95,48 @@ export default function App() {
     if (!analysisData) return null;
     const { name, sign, analysis } = analysisData;
     return (
-      <div style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1rem', fontFamily: 'system-ui, sans-serif' }}>
-        <h2 style={{ color: '#ffd700', textAlign: 'center', fontSize: '2.5rem', textShadow: '0 0 15px rgba(255, 215, 0, 0.4)' }}>
+      <div className="analysis-container">
+        <h2 className="analysis-title">
           ✨ The Cosmos Have Spoken ✨
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: '#fff' }}>
+        <div className="analysis-content">
           
-          <div style={{ background: 'linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8))', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(255, 215, 0, 0.4)', boxShadow: '0 0 30px rgba(255, 215, 0, 0.1)' }}>
-            <h3 style={{ color: '#ffd700', marginTop: 0, borderBottom: '1px solid rgba(255,215,0,0.2)', paddingBottom: '0.5rem' }}>
+          <div className="analysis-card-gold">
+            <h3 className="analysis-card-gold-title">
               {name}'s Cosmic Blueprint ({sign})
             </h3>
-            <p style={{ lineHeight: 1.6 }}><strong>Rising Sign Note:</strong> {analysis.risingSignNote}</p>
-            <p style={{ lineHeight: 1.6 }}><strong>Moon Sign Estimate:</strong> {analysis.moonSignEstimate}</p>
-            <p style={{ lineHeight: 1.6 }}><strong>Life Path Theme:</strong> {analysis.lifePathTheme}</p>
+            <p className="analysis-text"><strong>Rising Sign Note:</strong> {analysis.risingSignNote}</p>
+            <p className="analysis-text"><strong>Moon Sign Estimate:</strong> {analysis.moonSignEstimate}</p>
+            <p className="analysis-text"><strong>Life Path Theme:</strong> {analysis.lifePathTheme}</p>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8))', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(155, 81, 224, 0.4)' }}>
-            <h3 style={{ color: '#9b51e0', marginTop: 0 }}>Traits & Paths</h3>
-            <ul style={{ paddingLeft: '1.5rem', lineHeight: 1.6 }}>
+          <div className="analysis-card-purple">
+            <h3 className="analysis-card-purple-title">Traits & Paths</h3>
+            <ul className="analysis-list">
               <li><strong>Personality:</strong> {analysis.personalityTraits?.join(', ')}</li>
               <li><strong>Love Compatibility:</strong> {analysis.loveCompatibility?.join(', ')}</li>
               <li><strong>Career Strengths:</strong> {analysis.careerStrengths?.join(', ')}</li>
             </ul>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8))', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(155, 81, 224, 0.4)' }}>
-            <h3 style={{ color: '#9b51e0', marginTop: 0 }}>Forecast & Guidance</h3>
-            <p style={{ lineHeight: 1.6 }}><strong>Current Year:</strong> {analysis.currentYearForecast}</p>
-            <p style={{ lineHeight: 1.6 }}><strong>Next Month:</strong> {analysis.nextMonthForecast}</p>
-            <p style={{ lineHeight: 1.6 }}><strong>Challenges:</strong> {analysis.lifeChallenges?.join(', ')}</p>
+          <div className="analysis-card-purple">
+            <h3 className="analysis-card-purple-title">Forecast & Guidance</h3>
+            <p className="analysis-text"><strong>Current Year:</strong> {analysis.currentYearForecast}</p>
+            <p className="analysis-text"><strong>Next Month:</strong> {analysis.nextMonthForecast}</p>
+            <p className="analysis-text"><strong>Challenges:</strong> {analysis.lifeChallenges?.join(', ')}</p>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, rgba(19,6,35,0.8), rgba(17,26,59,0.8))', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(255, 215, 0, 0.4)' }}>
-            <h3 style={{ color: '#ffd700', marginTop: 0 }}>Spiritual Message</h3>
-            <p style={{ fontStyle: 'italic', lineHeight: 1.8, fontSize: '1.1rem' }}>{analysis.spiritualMessage}</p>
-            <div style={{ marginTop: '1.5rem', color: '#a0a0b0', fontSize: '0.95rem', display: 'flex', gap: '2rem' }}>
+          <div className="analysis-card-gold">
+            <h3 className="analysis-card-gold-title">Spiritual Message</h3>
+            <p className="spiritual-message-text">{analysis.spiritualMessage}</p>
+            <div className="lucky-stats">
               <span><strong>🔢 Lucky Numbers:</strong> {analysis.luckyNumbers?.join(', ')}</span>
               <span><strong>🎨 Colors:</strong> {analysis.luckyColors?.join(', ')}</span>
             </div>
           </div>
           
           <button 
-            style={{ 
-              padding: '1.25rem', fontSize: '1.25rem', marginTop: '1.5rem', 
-              background: 'linear-gradient(90deg, #4a2a6b, #9b51e0, #ffd700, #9b51e0, #4a2a6b)',
-              backgroundSize: '300% auto', color: '#fff', border: '1px solid #ffd700', 
-              borderRadius: '12px', cursor: 'pointer', fontWeight: 800, textTransform: 'uppercase'
-            }} 
+            className="chat-agent-btn"
             onClick={() => setView('chat')}
             onMouseOver={(e) => Object.assign(e.target.style, { transform: 'scale(1.02)' })}
             onMouseOut={(e) => Object.assign(e.target.style, { transform: 'scale(1)' })}
@@ -153,22 +151,17 @@ export default function App() {
   return (
     <div className="app">
       {/* Top Navbar */}
-      <nav style={{ 
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-        padding: '1.2rem 2.5rem', background: 'rgba(0,0,0,0.6)', 
-        borderBottom: '1px solid rgba(255, 215, 0, 0.2)', marginBottom: '2rem',
-        backdropFilter: 'blur(10px)', position: 'sticky', top: 0, zIndex: 50
-      }}>
+      <nav className="top-navbar">
         <h2 
-          style={{ margin: 0, cursor: 'pointer', color: '#ffd700', textShadow: '0 0 10px rgba(255,215,0,0.3)', verticalAlign: 'middle', display: 'flex', alignItems: 'center', gap: '0.5rem' }} 
+          className="nav-logo"
           onClick={() => setView('home')}
         >
           🔮 FortuneAgent
         </h2>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+        <div className="nav-actions">
           <button 
             onClick={() => setView('horoscope')} 
-            style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: 600, transition: 'color 0.2s' }}
+            className="nav-btn"
             onMouseOver={e => e.target.style.color = '#ffd700'}
             onMouseOut={e => e.target.style.color = '#fff'}
           >
@@ -176,18 +169,18 @@ export default function App() {
           </button>
           <button 
             onClick={() => setView('agent-form')} 
-            style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1rem', fontWeight: 600, transition: 'color 0.2s' }}
+            className="nav-btn"
             onMouseOver={e => e.target.style.color = '#ffd700'}
             onMouseOut={e => e.target.style.color = '#fff'}
           >
             My Cosmic Blueprint
           </button>
           {!wallet ? (
-            <button className="btn primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem' }} onClick={connectWallet}>
+            <button className="btn primary nav-wallet-btn" onClick={connectWallet}>
               Connect Wallet
             </button>
           ) : (
-            <span style={{ fontSize: '0.9rem', color: '#ffd700', background: 'rgba(255,215,0,0.1)', padding: '0.5rem 1rem', borderRadius: '20px', border: '1px solid rgba(255,215,0,0.3)' }}>
+            <span className="wallet-badge">
               ✅ {wallet.address.slice(0,6)}...{wallet.address.slice(-4)}
             </span>
           )}
@@ -195,33 +188,31 @@ export default function App() {
       </nav>
 
       {/* Main Content Areas */}
-      <main style={{ padding: '0 1rem 3rem' }}>
+      <main className="main-content">
         {view === 'home' && (
-          <div style={{ textAlign: 'center', maxWidth: '800px', margin: '3rem auto' }}>
-            <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', color: '#fff', letterSpacing: '1px' }}>Welcome to <span style={{ color: '#ffd700' }}>FortuneAgent</span></h1>
-            <p style={{ fontSize: '1.2rem', color: '#a0a0b0', marginBottom: '3.5rem', lineHeight: 1.6 }}>Your personal AI astrologer. Explore the cosmos, uncover your destiny, and chart your spiritual path completely on-chain.</p>
+          <div className="home-container">
+            <h1 className="home-title">Welcome to <span className="home-title-highlight">FortuneAgent</span></h1>
+            <p className="home-subtitle">Your personal AI astrologer. Explore the cosmos, uncover your destiny, and chart your spiritual path completely on-chain.</p>
             
-            <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '4.5rem', flexWrap: 'wrap' }}>
+            <div className="home-actions">
               <button 
-                className="btn primary" 
-                style={{ padding: '1.2rem 2.5rem', fontSize: '1.2rem' }} 
+                className="btn primary action-btn-large" 
                 onClick={() => setView('horoscope')}
               >
                 Check Daily Horoscope 🌟
               </button>
               <button 
-                className="btn mint" 
-                style={{ padding: '1.2rem 2.5rem', fontSize: '1.2rem', background: 'transparent', border: '2px solid #9b51e0', color: '#9b51e0' }} 
+                className="btn mint action-btn-mint" 
                 onClick={() => setView('agent-form')}
               >
                 Discover My Blueprint ✨
               </button>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', margin: '3rem 0', opacity: 0.6 }}>
-              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #4a2a6b)' }}></div>
-              <span style={{ padding: '0 1.5rem', color: '#a0a0b0', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '2px' }}>Quick Fortune Mint</span>
-              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(270deg, transparent, #4a2a6b)' }}></div>
+            <div className="divider-container">
+              <div className="divider-line-left"></div>
+              <span className="divider-text">Quick Fortune Mint</span>
+              <div className="divider-line-right"></div>
             </div>
             
             <div className="zodiac-grid">
@@ -237,7 +228,7 @@ export default function App() {
             </div>
 
             {zodiac && (
-              <div style={{ marginTop: '2rem' }}>
+              <div className="mt-2rem">
                 <button className="btn primary" onClick={getFortune} disabled={loading}>
                   {loading ? '✨ Reading the stars...' : `Get ${zodiac} Fortune`}
                 </button>
@@ -245,7 +236,7 @@ export default function App() {
             )}
 
             {fortune && (
-              <div className="fortune-box" style={{ marginTop: '2rem' }}>
+              <div className="fortune-box mt-2rem">
                 <p>{fortune}</p>
                 <button className="btn mint" onClick={mintFortune} disabled={minting || !wallet}>
                   {minting ? '⛏️ Minting...' : '🪙 Mint My Fortune as NFT'}
@@ -254,21 +245,21 @@ export default function App() {
             )}
 
             {txHash && (
-              <div className="success" style={{ marginTop: '1.5rem' }}>
+              <div className="success mt-1_5rem">
                 ✅ Fortune Minted!{' '}
-                <a href={`https://testnet.arcscan.app/tx/${txHash}`} target="_blank" rel="noreferrer" style={{ color: '#ffd700', textDecoration: 'underline' }}>
+                <a href={`https://testnet.arcscan.app/tx/${txHash}`} target="_blank" rel="noreferrer" className="link-gold">
                   View on Arc Scan →
                 </a>
               </div>
             )}
 
-            {error && <div className="error" style={{ marginTop: '1.5rem' }}>⚠️ {error}</div>}
+            {error && <div className="error mt-1_5rem">⚠️ {error}</div>}
 
             {/* Smart Contract Interactive Elements */}
-            <div style={{ marginTop: '3rem', padding: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,215,0,0.2)' }}>
-              <h3 style={{ color: '#ffd700', marginTop: 0 }}>On-Chain Statistics & Tipping</h3>
+            <div className="stats-card">
+              <h3 className="stats-title">On-Chain Statistics & Tipping</h3>
               
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1rem' }}>
+              <div className="stats-actions">
                 <button 
                   className="btn primary"
                   onClick={async () => {
@@ -286,14 +277,13 @@ export default function App() {
                 </button>
 
                 <button 
-                  className="btn primary"
+                  className="btn primary btn-tip"
                   onClick={async () => {
                     if(!wallet) return setError('Connect wallet first.');
                     try {
-                      // Prompt user to tip using Native USDC on Arc Testnet
                       const tx = await wallet.signer.sendTransaction({
-                        to: "0x1111111111111111111111111111111111111111", // Example dev treasury or burn address
-                        value: ethers.parseEther("0.1") // 0.1 USDC (Native Gas Token)
+                        to: "0x1111111111111111111111111111111111111111",
+                        value: ethers.parseEther("0.1")
                       });
                       alert(`Transaction sent! Hash: ${tx.hash}`);
                       await tx.wait();
@@ -303,7 +293,6 @@ export default function App() {
                       setError('Tip failed: ' + err.message);
                     }
                   }}
-                  style={{ background: 'linear-gradient(45deg, #2775ca, #0052ff)', border: 'none' }}
                 >
                   💧 Tip 0.1 USDC Natively
                 </button>
@@ -332,7 +321,7 @@ export default function App() {
           />
         )}
       </main>
-      <footer style={{ textAlign: 'center', padding: '2rem', color: '#a0a0b0', borderTop: '1px solid rgba(255,215,0,0.1)', marginTop: '2rem' }}>
+      <footer className="site-footer">
         Powered by Nous Research AI ✨ | Built on Arc Testnet
       </footer>
     </div>

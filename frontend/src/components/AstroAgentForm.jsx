@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import styles from './AstroAgentForm.module.css';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 
 export default function AstroAgentForm({ onAnalysisComplete }) {
   const [step, setStep] = useState(1);

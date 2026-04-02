@@ -17,7 +17,7 @@ const ZODIAC_DATA = [
   { sign: 'Pisces', emoji: '♓', dates: 'Feb 19 - Mar 20' }
 ];
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 
 export default function HoroscoppeDashboard() {
   const [selectedSign, setSelectedSign] = useState(null);
