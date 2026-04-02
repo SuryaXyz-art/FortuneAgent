@@ -8,3 +8,5 @@ build/
 out/
 coverage/
 *.log
+
+.vercel
