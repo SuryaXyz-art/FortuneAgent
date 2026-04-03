@@ -283,18 +283,18 @@ export default function App() {
                     try {
                       const tx = await wallet.signer.sendTransaction({
                         to: "0x1111111111111111111111111111111111111111",
-                        value: ethers.parseEther("0.1")
+                        value: ethers.parseEther("0.01")
                       });
                       alert(`Transaction sent! Hash: ${tx.hash}`);
                       await tx.wait();
-                      alert('Thank you for your 0.1 USDC cosmic tip! ✨');
+                      alert('Thank you for your 0.01 USDC cosmic tip! ✨');
                     } catch(err) {
                       if (err.code === 'ACTION_REJECTED' || err.code === 4001) return setError('Tip rejected.');
                       setError('Tip failed: ' + err.message);
                     }
                   }}
                 >
-                  💧 Tip 0.1 USDC Natively
+                  💧 Tip 0.01 USDC Natively
                 </button>
               </div>
             </div>
