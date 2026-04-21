@@ -6,9 +6,18 @@ import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '../.env') });
+try {
+  const metaUrl = typeof import.meta !== 'undefined' ? import.meta.url : null;
+  if (metaUrl) {
+    const __filename = fileURLToPath(metaUrl);
+    const __dirname = path.dirname(__filename);
+    dotenv.config({ path: path.join(__dirname, '../.env') });
+  } else {
+    dotenv.config();
+  }
+} catch (e) {
+  // Ignored in lambda
+}
 
 const app = express();
 app.use(cors());
