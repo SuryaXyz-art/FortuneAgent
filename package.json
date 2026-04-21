@@ -5,6 +5,10 @@
     "deploy": "cd contracts && forge script script/Deploy.s.sol:DeployFortuneNFT --rpc-url https://rpc.testnet.arc.network --private-key $PRIVATE_KEY --broadcast"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2",
     "serverless-http": "^4.0.0"
   }
 }
