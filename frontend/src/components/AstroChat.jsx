@@ -12,7 +12,7 @@ const SUGGESTED_QUESTIONS = [
   "My spiritual purpose? 🌌"
 ];
 
-export default function AstroChat({ userName, zodiacSign, analysis, sessionId }) {
+export default function AstroChat({ userName, zodiacSign, sessionId }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -52,7 +52,7 @@ export default function AstroChat({ userName, zodiacSign, analysis, sessionId })
       
       const aiMsg = { id: Date.now() + 1, text: res.data.reply, sender: 'ai' };
       setMessages(prev => [...prev, aiMsg]);
-    } catch (err) {
+    } catch {
       const errorMsg = { 
         id: Date.now() + 1, 
         text: "The cosmic connection was disrupted. Please try asking again.", 

@@ -364,7 +364,11 @@ app.post('/api/fortune', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend listening on http://localhost:${PORT}`);
-});
+if (!process.env.NETLIFY) {
+  app.listen(PORT, () => {
+    console.log(`Backend listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
 

@@ -57,7 +57,7 @@ export default function App() {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/fortune`, { zodiac });
       setFortune(res.data.fortune);
-    } catch (err) {
+    } catch {
       setError('Fortune generation failed. Check backend is running.');
     } finally {
       setLoading(false);

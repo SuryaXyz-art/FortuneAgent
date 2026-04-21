@@ -16,7 +16,7 @@ export default function AstroAgentForm({ onAnalysisComplete }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [result, setResult] = useState(null);
+  const [_result, setResult] = useState(null);
   const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
